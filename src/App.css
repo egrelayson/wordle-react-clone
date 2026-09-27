@@ -90,52 +90,289 @@ nav h1 {
   background-color: #3a393c;
 }
 
+/* Align keyboard container to match board width */
 .keyboard {
-  width: 43em;
-  height: 18em;
-  margin-top: 2em;
+  width: 20em;            /* Matches .board width */
+  max-width: 100%;
+  margin-top: 1.5em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;             /* Vertical spacing between rows */
+  box-sizing: border-box;
 }
 
-.line1 {
-  flex: 33%;
-  display: flex;
-  flex-direction: row;
-  display: flex;
-  justify-content: center;
-  margin: 5px;
-}
-.line2 {
-  flex: 33%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin: 5px;
-}
+/* Individual keyboard rows */
+.line1,
+.line2,
 .line3 {
-  flex: 33%;
   display: flex;
-  flex-direction: row;
+  width: 100%;
+  gap: 0.25em;            /* Horizontal spacing between keys */
   justify-content: center;
-  margin: 0.1em;
+  margin: 0;              /* Reset old margin override */
 }
 
+/* Base key style: flex-grow lets them fill the row naturally */
 .key {
-  width: 1.12em;
-  height: 2.13em;
-  margin: 0.15em;
-  border-radius: 0.25em;
-  display: grid;
-  place-items: center;
-  font-size: 1.25em;
+  flex: 1;                /* Keys auto-expand to fill available row space */
+  height: 2.8em;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: bold;
   background-color: grey;
   color: white;
   font-family: Arial, Helvetica, sans-serif;
   cursor: pointer;
+  user-select: none;
+  box-sizing: border-box;
 }
 
-#big {
-  width: 4.25em;
+/* Big keys (ENTER and DELETE) on line 3 */
+#big,
+.bigKey {
+  flex: 1.5;              /* Takes 1.5x width of standard keys */
+  height: inherit;        /* Ensures identical height to standard keys */
+  font-size: 0.7em;       /* Adjusts text sizing for ENTER/DELETE */
 }
 #disabled {
   background-color: #3a393c;
+}
+
+/* Proposal Container */
+.proposal-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+  padding: 20px;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+/* Floating Hearts Background Effect */
+.hearts-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.floating-heart {
+  position: absolute;
+  bottom: -50px;
+  opacity: 0.8;
+  animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(0.8);
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-105vh) scale(1.2);
+    opacity: 0;
+  }
+}
+
+/* Proposal Text & Card */
+.proposal-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 20;
+}
+
+.proposal-title {
+  font-family: 'Georgia', serif;
+  font-size: 2.2rem;
+  color: #ff3366;
+  text-shadow: 0 0 10px rgba(255, 51, 102, 0.4);
+  margin-bottom: 15px;
+}
+
+/* Ring Box Graphic */
+.ring-box-wrapper {
+  margin: 15px 0 25px 0;
+  perspective: 600px;
+}
+
+.ring-box {
+  position: relative;
+  width: 120px;
+  height: 100px;
+  background: linear-gradient(145deg, #8b0000, #4a0000);
+  border-radius: 12px;
+  border: 2px solid #ffd700;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), inset 0 2px 5px rgba(255, 215, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ring-cushion {
+  position: absolute;
+  bottom: 10px;
+  width: 80%;
+  height: 25px;
+  background: #1a1a1a;
+  border-radius: 5px;
+}
+
+.ring-diamond {
+  font-size: 3rem;
+  z-index: 2;
+  margin-bottom: 15px;
+  filter: drop-shadow(0 0 8px #ffffff);
+  animation: ringGlow 2s infinite alternate;
+}
+
+.sparkle {
+  position: absolute;
+  font-size: 1rem;
+  animation: pulse 1.5s infinite alternate;
+}
+.sparkle-1 { top: 10px; left: 15px; }
+.sparkle-2 { top: 15px; right: 15px; }
+
+@keyframes ringGlow {
+  from { filter: drop-shadow(0 0 4px #ffffff); }
+  to { filter: drop-shadow(0 0 14px #ffd700); }
+}
+
+/* Proposal Buttons */
+.proposal-buttons {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  min-height: 50px;
+}
+
+.btn-yes {
+  padding: 12px 30px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(255, 65, 108, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-yes:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 20px rgba(255, 65, 108, 0.6);
+}
+
+.btn-no {
+  padding: 10px 24px;
+  font-size: 1rem;
+  color: #aaa;
+  background: #2a2a2a;
+  border: 1px solid #444;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.proposal-accepted {
+  text-align: center;
+  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.proposal-subtitle {
+  font-size: 1.2rem;
+  color: #ddd;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.game-over-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.game-over-card {
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  max-width: 360px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #f0f0f0;
+  animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.icon-wrapper {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.subtitle {
+  margin: 0.5rem 0 1.5rem;
+  font-size: 0.95rem;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+.retry-button {
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #ef4444; /* Bold Red */
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.3);
+}
+
+.retry-button:hover {
+  background-color: #dc2626;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px -2px rgba(239, 68, 68, 0.4);
+}
+
+.retry-button:active {
+  transform: translateY(0);
+}
+
+/* Subtle entrance pop animation */
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

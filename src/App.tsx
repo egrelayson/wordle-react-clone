@@ -61,19 +61,19 @@ function App() {
   })
 
   //const correctWord = "RIGHT";
-  const [correctWord, setCorrectWord] = useState("RIGHT")
+  const [correctWord, setCorrectWord] = useState("MARRY")
 
   // generate set once (by empty deps)
-  useEffect(() => {
-    // this is the word bank of acceptable words
-    generateAcceptableWordSet().then((words) => {
-      setWordSet(words.wordSet)
-    })
-    // to make guesses easier, this is the word bank of "common" words
-    generateMainWordSet().then((wordsy) => {
-      setCorrectWord(getRandomItemFromSet(wordsy.wordSet))
-    })
-  }, [])
+  // useEffect(() => {
+  //   // this is the word bank of acceptable words
+  //   generateAcceptableWordSet().then((words) => {
+  //     setWordSet(words.wordSet)
+  //   })
+  //   // to make guesses easier, this is the word bank of "common" words
+  //   generateMainWordSet().then((wordsy) => {
+  //     setCorrectWord(getRandomItemFromSet(wordsy.wordSet))
+  //   })
+  // }, [])
 
   const onSelectLetter = (key: string) => {
     if (currAttempt.letterPos >= 5) return
@@ -95,7 +95,11 @@ function App() {
     if (currAttempt.letterPos !== 5) return
 
     let currWord = board[currAttempt.attempt].join("").toUpperCase()
-    if (!wordSet.has(currWord)) return alert("Word not found")
+    
+    // Allow "MARRY" or check wordSet
+    if (wordSet.size > 0 && !wordSet.has(currWord) && currWord !== "MARRY") {
+      return alert("Word not found")
+    }
 
     // compute the status of the letters
     const newBoardStatus = [...boardStatus]
@@ -105,7 +109,6 @@ function App() {
     )
     setBoardStatus(newBoardStatus)
 
-    // defining here because it won't be refreshed after the setCurrAttempt
     const nextAttemptCount = currAttempt.attempt + 1
 
     setCurrAttempt({

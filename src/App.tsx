@@ -64,16 +64,16 @@ function App() {
   const [correctWord, setCorrectWord] = useState("MARRY")
 
   // generate set once (by empty deps)
-  // useEffect(() => {
-  //   // this is the word bank of acceptable words
-  //   generateAcceptableWordSet().then((words) => {
-  //     setWordSet(words.wordSet)
-  //   })
-  //   // to make guesses easier, this is the word bank of "common" words
-  //   generateMainWordSet().then((wordsy) => {
-  //     setCorrectWord(getRandomItemFromSet(wordsy.wordSet))
-  //   })
-  // }, [])
+  useEffect(() => {
+    // this is the word bank of acceptable words
+    generateAcceptableWordSet().then((words) => {
+      setWordSet(words.wordSet)
+    })
+    // to make guesses easier, this is the word bank of "common" words
+    // generateMainWordSet().then((wordsy) => {
+    //   setCorrectWord(getRandomItemFromSet(wordsy.wordSet))
+    // })
+  }, [])
 
   const onSelectLetter = (key: string) => {
     if (currAttempt.letterPos >= 5) return
@@ -96,8 +96,7 @@ function App() {
 
     let currWord = board[currAttempt.attempt].join("").toUpperCase()
     
-    // Allow "MARRY" or check wordSet
-    if (wordSet.size > 0 && !wordSet.has(currWord) && currWord !== "MARRY") {
+    if (wordSet.size > 0 && !wordSet.has(currWord)) {
       return alert("Word not found")
     }
 

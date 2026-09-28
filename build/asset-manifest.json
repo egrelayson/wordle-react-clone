@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/wordle-react-clone/static/css/main.7c64f25b.css",
-    "main.js": "/wordle-react-clone/static/js/main.148912a1.js",
-    "static/js/787.00933c7b.chunk.js": "/wordle-react-clone/static/js/787.00933c7b.chunk.js",
+    "main.css": "/wordle-react-clone/static/css/main.17a1acee.css",
+    "main.js": "/wordle-react-clone/static/js/main.a46ca0cd.js",
+    "static/js/453.1f3c0657.chunk.js": "/wordle-react-clone/static/js/453.1f3c0657.chunk.js",
     "static/media/wordle-nytimes-acceptable-bank.txt": "/wordle-react-clone/static/media/wordle-nytimes-acceptable-bank.0acea1c53401a89146ab.txt",
     "static/media/wordle-nytimes-main-bank.txt": "/wordle-react-clone/static/media/wordle-nytimes-main-bank.bce4b750917abb5456d1.txt",
     "index.html": "/wordle-react-clone/index.html",
-    "main.7c64f25b.css.map": "/wordle-react-clone/static/css/main.7c64f25b.css.map",
-    "main.148912a1.js.map": "/wordle-react-clone/static/js/main.148912a1.js.map",
-    "787.00933c7b.chunk.js.map": "/wordle-react-clone/static/js/787.00933c7b.chunk.js.map"
+    "main.17a1acee.css.map": "/wordle-react-clone/static/css/main.17a1acee.css.map",
+    "main.a46ca0cd.js.map": "/wordle-react-clone/static/js/main.a46ca0cd.js.map",
+    "453.1f3c0657.chunk.js.map": "/wordle-react-clone/static/js/453.1f3c0657.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7c64f25b.css",
-    "static/js/main.148912a1.js"
+    "static/css/main.17a1acee.css",
+    "static/js/main.a46ca0cd.js"
   ]
 }

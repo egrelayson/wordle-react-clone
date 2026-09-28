@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { AppContext } from "../App"
 
 function GameOver() {
-  const { gameOver, currAttempt, correctWord } = React.useContext(AppContext)
+  const { gameOver, currAttempt, correctWord, mode, onRestart } = React.useContext(AppContext)
   const [hasAccepted, setHasAccepted] = useState(false)
   const [noBtnPosition, setNoBtnPosition] = useState({ top: "0px", left: "0px" })
   const [isNoBtnEvasive, setIsNoBtnEvasive] = useState(false)
@@ -24,22 +24,35 @@ function GameOver() {
     size: `${14 + Math.random() * 20}px`,
   }))
 
+  if (mode === "normal") {
+    const messages = ["Genius", "Magnificent", "Impressive", "Splendid", "Great", "Phew"]
+    const result = gameOver.guessedWord
+      ? messages[Math.max(0, currAttempt.attempt - 1)]
+      : `The word was ${correctWord}`
+
+    return (
+      <div className="game-over-container">
+        <div className="game-over-card">
+          <h2>{result}</h2>
+          <p>{gameOver.guessedWord ? `Solved in ${currAttempt.attempt}/6` : "Better luck next time"}</p>
+          <button className="retry-button" onClick={onRestart}>
+            Play Again
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   if (!gameOver.guessedWord) {
     return (
       <div className="game-over-container">
         <div className="game-over-card">
-          <h3>Almost there! Try again! 💭</h3>
-          
-          <button 
-            className="retry-button" 
-            onClick={() => window.location.reload()}
-            aria-label="Restart Game"
-          >
+          <button className="retry-button" onClick={onRestart}>
             Try Again
           </button>
         </div>
       </div>
-    );
+    )
   }
 
   return (

@@ -28,13 +28,37 @@ nav {
   border-bottom: 1px solid #3a3a3c;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  padding: 0 20px;
 }
 
 nav h1 {
   font-size: 36px;
   font-weight: 700;
   letter-spacing: 0.01rem;
+  color: #ffffff;
+}
+
+.mode-switch {
+  display: flex;
+  padding: 3px;
+  border: 1px solid #3a3a3c;
+  border-radius: 6px;
+}
+
+.mode-switch button {
+  padding: 7px 10px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: #a7a7a8;
+  font: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.mode-switch button.active {
+  background: #565758;
   color: #ffffff;
 }
 
@@ -344,14 +368,24 @@ nav h1 {
 }
 
 .game-over-card {
-  border-radius: 16px;
-  padding: 2.5rem 2rem;
+  border-radius: 8px;
+  padding: 1.5rem 1.75rem;
   max-width: 360px;
   width: 100%;
   text-align: center;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-  border: 1px solid #f0f0f0;
+  background: #1a1a1b;
+  border: 1px solid #3a3a3c;
   animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.game-over-card h2,
+.game-over-card h3 {
+  color: #ffffff;
+}
+
+.game-over-card p {
+  margin: 0.5rem 0 1rem;
+  color: #a7a7a8;
 }
 
 .icon-wrapper {
@@ -374,23 +408,20 @@ nav h1 {
 }
 
 .retry-button {
-  width: 100%;
-  padding: 0.875rem 1.5rem;
+  padding: 0.75rem 1.5rem;
   font-size: 1rem;
   font-weight: 600;
   color: #ffffff;
-  background-color: #ef4444; /* Bold Red */
+  background-color: #538d4e;
   border: none;
-  border-radius: 10px;
+  border-radius: 4px;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.3);
 }
 
 .retry-button:hover {
-  background-color: #dc2626;
+  background-color: #6aaa64;
   transform: translateY(-2px);
-  box-shadow: 0 6px 12px -2px rgba(239, 68, 68, 0.4);
 }
 
 .retry-button:active {

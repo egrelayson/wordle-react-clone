@@ -2,7 +2,7 @@
 
 This is a personal fork of a React + TypeScript Wordle clone, tuned to match the feel of the official game more closely while keeping the project lightweight and easy to run.
 
-This fork focuses on the standard Wordle experience and intentionally excludes the special mode from the current build.
+This fork focuses on the standard Wordle experience.
 
 ## What changed in this fork
 

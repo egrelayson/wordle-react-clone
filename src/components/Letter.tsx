@@ -8,6 +8,13 @@ type Props = {
   attemptVal: number
 }
 
+const getResultColor = (status: string) => {
+  if (status === "correct") return "#6aaa64"
+  if (status === "almost") return "#c9b458"
+  if (status === "error") return "#3a3a3c"
+  return "#121213"
+}
+
 function Letter({ letterPos, attemptVal }: Props) {
   const {
     board,
@@ -41,6 +48,9 @@ function Letter({ letterPos, attemptVal }: Props) {
     }
   }
 
+  const isSubmitted = currAttempt.attempt > attemptVal
+  const shouldPop = Boolean(letter) && !isSubmitted
+
   useEffect(() => {
     if (currAttempt.attempt > attemptVal) {
       let newLetterStatus = new Map<string, LetterStatus>(letterStatus)
@@ -62,7 +72,15 @@ function Letter({ letterPos, attemptVal }: Props) {
   ])
 
   return (
-    <div className="letter" id={letterState}>
+    <div
+      key={letter || `empty-${attemptVal}-${letterPos}`}
+      className={`letter${shouldPop ? " pop" : ""}${isSubmitted ? " flip" : ""}`}
+      id={letterState}
+      style={{
+        "--result-color": getResultColor(letterState),
+        animationDelay: isSubmitted ? `${letterPos * 250}ms` : undefined,
+      } as React.CSSProperties}
+    >
       {letter}
     </div>
   )

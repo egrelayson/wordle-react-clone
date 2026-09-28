@@ -3,6 +3,7 @@ import {
   Dispatch,
   SetStateAction,
   useEffect,
+  useRef,
   useState,
 } from "react"
 
@@ -22,6 +23,8 @@ import Keyboard from "./components/Keyboard"
 import GameOver from "./components/GameOver"
 
 export interface IWordleGameContext {
+  mode: "normal" | "special"
+  onRestart: () => void
   board: string[][]
   setBoard: Dispatch<SetStateAction<string[][]>>
   boardStatus: LetterStatus[][]
@@ -46,22 +49,30 @@ export const AppContext = createContext<IWordleGameContext>(
   {} as IWordleGameContext
 )
 
+type GameMode = "normal" | "special"
+
+const GAME_CONFIG = {
+  mode: "normal" as GameMode,
+}
+
 function App() {
+  const [mode, setMode] = useState<GameMode>(GAME_CONFIG.mode)
+  const modeRef = useRef(mode)
   const [board, setBoard] = useState(boardDefault)
   const [boardStatus, setBoardStatus] = useState(boardStatusDefault)
   const [currAttempt, setCurrAttempt] = useState({
     attempt: 0,
     letterPos: 0,
   })
-  const [wordSet, setWordSet] = useState(new Set())
+  const [wordSet, setWordSet] = useState<Set<string>>(new Set())
+  const [mainWordSet, setMainWordSet] = useState<Set<string>>(new Set())
   const [letterStatus, setLetterStatus] = useState(new Map())
   const [gameOver, setGameOver] = useState({
     gameOver: false,
     guessedWord: false,
   })
 
-  //const correctWord = "RIGHT";
-  const [correctWord, setCorrectWord] = useState("RIGHT")
+  const [correctWord, setCorrectWord] = useState("MARRY")
 
   // generate set once (by empty deps)
   useEffect(() => {
@@ -69,15 +80,32 @@ function App() {
     generateAcceptableWordSet().then((words) => {
       setWordSet(words.wordSet)
     })
-    // to make guesses easier, this is the word bank of "common" words
-    generateMainWordSet().then((wordsy) => {
-      setCorrectWord(getRandomItemFromSet(wordsy.wordSet))
+    generateMainWordSet().then((words) => {
+      setMainWordSet(words.wordSet)
+      if (modeRef.current === "normal") {
+        setCorrectWord(getRandomItemFromSet(words.wordSet))
+      }
     })
   }, [])
 
+  const resetGame = (nextMode: GameMode = GAME_CONFIG.mode) => {
+    modeRef.current = nextMode
+    setMode(nextMode)
+    setBoard(boardDefault.map((row) => [...row]))
+    setBoardStatus(boardStatusDefault.map((row) => [...row]))
+    setCurrAttempt({ attempt: 0, letterPos: 0 })
+    setLetterStatus(new Map())
+    setGameOver({ gameOver: false, guessedWord: false })
+    if (nextMode === "normal" && mainWordSet.size > 0) {
+      setCorrectWord(getRandomItemFromSet(mainWordSet))
+    } else {
+      setCorrectWord("MARRY")
+    }
+  }
+
   const onSelectLetter = (key: string) => {
     if (currAttempt.letterPos >= 5) return
-    const newBoard = [...board]
+    const newBoard = board.map((row) => [...row])
     newBoard[currAttempt.attempt][currAttempt.letterPos] = key
     setBoard(newBoard)
     setCurrAttempt({ ...currAttempt, letterPos: currAttempt.letterPos + 1 })
@@ -85,7 +113,7 @@ function App() {
 
   const onDelete = () => {
     if (currAttempt.letterPos === 0) return
-    const newBoard = [...board]
+    const newBoard = board.map((row) => [...row])
     newBoard[currAttempt.attempt][currAttempt.letterPos - 1] = ""
     setBoard(newBoard)
     setCurrAttempt({ ...currAttempt, letterPos: currAttempt.letterPos - 1 })
@@ -95,7 +123,10 @@ function App() {
     if (currAttempt.letterPos !== 5) return
 
     let currWord = board[currAttempt.attempt].join("").toUpperCase()
-    if (!wordSet.has(currWord)) return alert("Word not found")
+    
+    if (wordSet.size > 0 && !wordSet.has(currWord)) {
+      return alert("Word not found")
+    }
 
     // compute the status of the letters
     const newBoardStatus = [...boardStatus]
@@ -105,7 +136,6 @@ function App() {
     )
     setBoardStatus(newBoardStatus)
 
-    // defining here because it won't be refreshed after the setCurrAttempt
     const nextAttemptCount = currAttempt.attempt + 1
 
     setCurrAttempt({
@@ -133,6 +163,8 @@ function App() {
       </nav>
       <AppContext.Provider
         value={{
+          mode,
+          onRestart: () => resetGame(),
           board,
           setBoard,
           boardStatus,

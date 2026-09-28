@@ -12,7 +12,7 @@ function Key({ keyVal, bigKey, status }: Props) {
   const { onDelete, onEnter, onSelectLetter } = useContext(AppContext)
 
   const selectLetter = () => {
-    if (keyVal === "DELETE") {
+    if (keyVal === "DELETE" || keyVal === "⌫") {
       onDelete()
     } else if (keyVal === "ENTER") {
       onEnter()

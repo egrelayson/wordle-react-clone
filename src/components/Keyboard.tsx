@@ -85,7 +85,7 @@ function Keyboard() {
             />
           )
         })}
-        <Key keyVal={"DELETE"} bigKey />
+        <Key keyVal={"⌫"} bigKey />
       </div>
     </div>
   )

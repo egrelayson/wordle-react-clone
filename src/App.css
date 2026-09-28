@@ -152,7 +152,7 @@ nav h1 {
 }
 
 .letter.flip {
-  animation: letterFlip 500ms ease-in-out forwards;
+  animation: letterFlip 500ms ease-in-out both;
 }
 
 @keyframes letterFlip {

@@ -41,6 +41,9 @@ function Letter({ letterPos, attemptVal }: Props) {
     }
   }
 
+  const isSubmitted = currAttempt.attempt > attemptVal
+  const shouldPop = Boolean(letter) && !isSubmitted
+
   useEffect(() => {
     if (currAttempt.attempt > attemptVal) {
       let newLetterStatus = new Map<string, LetterStatus>(letterStatus)
@@ -62,7 +65,14 @@ function Letter({ letterPos, attemptVal }: Props) {
   ])
 
   return (
-    <div className="letter" id={letterState}>
+    <div
+      key={letter || `empty-${attemptVal}-${letterPos}`}
+      className={`letter${shouldPop ? " pop" : ""}${isSubmitted ? " flip" : ""}`}
+      id={letterState}
+      style={{
+        animationDelay: isSubmitted ? `${letterPos * 250}ms` : undefined,
+      }}
+    >
       {letter}
     </div>
   )

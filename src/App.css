@@ -117,26 +117,71 @@ nav h1 {
   border-color: #565758;
 }
 
+.letter.pop {
+  animation: letterPop 100ms ease-in-out;
+}
+
+@keyframes letterPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
 .letter#correct,
 .letter[data-status="correct"] {
-  background-color: #6aaa64 !important;
-  border-color: #6aaa64 !important;
+  --result-color: #6aaa64;
+  background-color: var(--result-color);
+  border-color: var(--result-color);
   color: #ffffff;
 }
 
 .letter#almost,
 .letter[data-status="almost"] {
-  background-color: #c9b458 !important;
-  border-color: #c9b458 !important;
+  --result-color: #c9b458;
+  background-color: var(--result-color);
+  border-color: var(--result-color);
   color: #ffffff;
 }
 
 .letter#error,
 .letter[data-status="error"] {
-  background-color: #3a3a3c !important;
-  border-color: #3a3a3c !important;
+  --result-color: #3a3a3c;
+  background-color: var(--result-color);
+  border-color: var(--result-color);
   color: #ffffff;
 }
+
+.letter.flip {
+  animation: letterFlip 500ms ease-in-out forwards;
+}
+
+@keyframes letterFlip {
+  0% {
+    transform: rotateX(0deg);
+    background-color: #121213;
+    border-color: #565758;
+  }
+  49.9% {
+    background-color: #121213;
+    border-color: #565758;
+  }
+  50% {
+    transform: rotateX(90deg);
+    background-color: var(--result-color, #3a3a3c);
+    border-color: var(--result-color, #3a3a3c);
+  }
+  100% {
+    transform: rotateX(0deg);
+    background-color: var(--result-color, #3a3a3c);
+    border-color: var(--result-color, #3a3a3c);
+  }
+}
+
+.letter:nth-child(1).flip { animation-delay: 0ms; }
+.letter:nth-child(2).flip { animation-delay: 250ms; }
+.letter:nth-child(3).flip { animation-delay: 500ms; }
+.letter:nth-child(4).flip { animation-delay: 750ms; }
+.letter:nth-child(5).flip { animation-delay: 1000ms; }
 
 /* Keyboard Styling */
 .keyboard {
